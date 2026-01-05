@@ -2,12 +2,18 @@ import { useContext, useState } from "react";
 import dataContext from "../context/dataContext";
 
 export default function Card() {
-  const { word, data,setClose } = useContext(dataContext);
+  const { word, data,setClose,error } = useContext(dataContext);
   
 
   if (!word) return null;
-  if (!data) return <p className="text-center">Loading...</p>;
-
+  
+  if (error) return <p className="text-center text-2xl">{error}</p>;
+  
+  
+if (!data) {
+  return <p className="text-center">Loading...</p>;
+}
+  
   return (
     <div className="bg-white/50 backdrop-blur-lg 
                     border border-black/70 px-2 py-3 rounded-2xl 

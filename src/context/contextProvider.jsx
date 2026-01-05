@@ -5,6 +5,8 @@ export default function ContextProvider({ children }) {
   const [data, setData] = useState(null);
   const [word, setWord] = useState("");
   const [close,setClose]=useState(false);
+  const [error, setError] = useState("");
+
    const [words,setWords]=useState(() => {
     return JSON.parse(localStorage.getItem("items")) || [];
   })
@@ -13,15 +15,35 @@ export default function ContextProvider({ children }) {
         },[words])
   useEffect(() => {
     if (!word) return;
+     setError("");  
+     setData(null);  
 
     fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
-      .then(res => res.json())
-      .then(res => setData(res[0]))
-      .catch(err => console.error(err))
+      .then(res => {
+        if(!res.ok) throw new Error("Word Not found")
+        return res.json()})
+      .then(res => {
+         if (!Array.isArray(res)) {
+        throw new Error("Invalid word");
+      }
+        setData(res[0])
+
+            setWords((prev)=>{
+         if (prev.includes(word)) return prev;
+         
+         return[...prev,word]
+        }
+    )
+      })
+      .catch(err =>{
+        
+        setError(`Error! ${word} not found`);
+        console.log(err)
+      })
   }, [word]);
 
   return (
-    <dataContext.Provider value={{ data, setData, word, setWord ,close,setClose,words,setWords}}>
+    <dataContext.Provider value={{ data, setData, word, setWord ,close,setClose,words,setWords,error,setError}}>
       {children}
     </dataContext.Provider>
   );

@@ -2,7 +2,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { useContext, useEffect, useState } from "react";
 import dataContext from "../context/dataContext";
 function Search(){
-  const{setWord,setClose,setWords,word}=useContext(dataContext);
+  const{setWord,setClose,setWords,data}=useContext(dataContext);
   const [input,setInput]=useState('');
  
    const handleSubmit =(e)=>{
@@ -11,11 +11,7 @@ function Search(){
       
       if(!value) return;
       setWord(value);
-      setWords((prev)=>{
-         if (prev.includes(value)) return prev;
-         return[...prev,value]
-        }
-    )
+  
      setInput("")
       setClose(true)
     }
