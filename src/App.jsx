@@ -20,7 +20,7 @@ function App() {
  
     <h1 className='text-5xl text-black poppins-regular font-semibold text-shadow-md text-shadow-slate-800 '>Dictionary</h1>
     </div>
-    <div className=' border flex flex-col gap-6 border-slate-800 mt-6 shadow-lg shadow-black rounded-xl px-4 py-8 h-10/12 ' >
+    <div className=' border flex flex-col gap-6 border-slate-800 mt-6 shadow-lg shadow-black rounded-xl px-4 py-8 h-3/4 ' >
 
    
     <Search/>
